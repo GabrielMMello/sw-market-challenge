@@ -1,4 +1,12 @@
+import { useHistory } from 'react-router-dom'
+
 function Orders({ orders }) {
+    let history = useHistory()
+
+    const handleClick = () => {
+      history.push('/products')
+    }
+  
     return (
         <div className="orders">
             {orders.length === 0 ? <p>No orders</p>
@@ -21,6 +29,7 @@ function Orders({ orders }) {
                 ) }
             </ul>
             }
+            <button onClick={ handleClick }>Products</button>
         </div>
     )
 }
