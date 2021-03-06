@@ -1,5 +1,7 @@
-import { useState } from 'react'
 import ProductCard from './components/ProductCard.js'
+
+import { useState } from 'react'
+import{ useHistory } from 'react-router-dom'
 
 function ProductList() {
     const [ products, setProducts ] = useState([
@@ -47,9 +49,16 @@ function ProductList() {
         }
       ])
 
+      let history = useHistory()
+    
+      const handleClick = () => {
+        history.push('/orders')
+      }
+    
     return (
         <div className="productList">
             { products.map(product => <ProductCard product={ product } />) }
+            <button onClick={handleClick}>Orders</button>
         </div>
     )
 }
