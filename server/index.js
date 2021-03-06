@@ -1,26 +1,50 @@
 const express = require('express')
 const PORT = 8080
 
+const Services = require('./src/services/Services.js')
+const Repository = require('./src/repository/Repository.js')
+const Database = require('./src/database/Database.js')
+
+const DBConnection = (new Database()).connect()
+const RepositoryInstance = new Repository(DBConnection)
+
+const {
+  getUsers,
+  getProducts,
+  getOrders,
+  postOrder
+} = new Services(RepositoryInstance)
+
+const HOME_MESSAGE = {
+  message: 'Hello! This server is API only. For details about the endpoints please check the README in https://github.com/GabrielMMello/sw-market-challenge'
+}
+
 const app = express()
+app.use(express.json())
 
 app.get('/', (_req, res) => {
-  res.send('Hello! This server is API only. For details about the endpoints please check the README in https://github.com/GabrielMMello/sw-market-challenge')
+  res.json(HOME_MESSAGE)
 })
 
-app.get('/users', (_req, res) => {
-  res.send('Hello!')
+app.get('/users', async (_req, res) => {
+  const usersData = getUsers()
+  res.json(usersData)
 })
 
-app.get('/products', (_req, res) => {
-  res.send('Hello!')
+app.get('/products', async (_req, res) => {
+  const productsData = await getProducts()
+  res.json(productsData)
 })
 
 app.route('/orders')
-  .get((_req, res) => {
-    res.send('Hello!')
+  .get(async (_req, res) => {
+    const ordersData = await getOrders()
+    res.json(ordersData)
   })
   .post(async (req, res) => {
-    res.send('Hello!')
+    const newOrder = req.body
+    const newOrdersData = postOrder(newOrder)
+    res.json(newOrdersData)
   })
 
 
