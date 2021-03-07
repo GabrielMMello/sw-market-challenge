@@ -1,0 +1,44 @@
+[
+  {
+    "id": "291a2e21-7429-4026-86ee-20e51aec86e0",
+    "name": "Millenium​ ​Falcon",
+    "price": 55000000,
+    "multiple": 1
+  },
+  {
+    "id": "ea5d2c3f-be99-4d76-bf0a-3c4d56d6c855",
+    "name": "X-Wing",
+    "price": 6000000,
+    "multiple": 2
+  },
+  {
+    "id": "a406924d-f682-4071-a593-4e7a9852d9be",
+    "name": "Super​ ​Star​ ​Destroyer",
+    "price": 457000000,
+    "multiple": 1
+  },
+  {
+    "id": "9329e001-84fa-4eb6-8f8d-a3ab759db0b5",
+    "name": "TIE​ ​Fighter",
+    "price": 7500000,
+    "multiple": 2
+  },
+  {
+    "id": "080b662f-8ec4-4a0d-a2ca-85a51ee9c939",
+    "name": "Lightsaber",
+    "price": 600000,
+    "multiple": 5
+  },
+  {
+    "id": "dd84185d-2b46-4f6e-9118-2cd328eb015b",
+    "name": "DLT-19​ ​Heavy​ ​Blaster​ ​Rifle",
+    "price": 580000,
+    "multiple": 1
+  },
+  {
+    "id": "53f01e2f-4836-428f-b53b-6fc13d91a593",
+    "name": "DL-44​ ​Heavy​ ​Blaster​ ​Pistol",
+    "price": 150000,
+    "multiple": 10
+  }
+]

@@ -5,7 +5,7 @@ const Services = require('./src/services/Services.js')
 const Repository = require('./src/repository/Repository.js')
 const Database = require('./src/database/Database.js')
 
-const DBConnection = (new Database()).connect()
+const DBConnection = (new Database(__dirname + '/src/database/data/')).connect()
 const RepositoryInstance = new Repository(DBConnection)
 
 const {
@@ -20,6 +20,8 @@ const HOME_MESSAGE = {
 }
 
 const app = express()
+const dir = __dirname + '/public'
+app.use(express.static(dir));
 app.use(express.json())
 
 app.get('/', (_req, res) => {
@@ -27,7 +29,7 @@ app.get('/', (_req, res) => {
 })
 
 app.get('/users', async (_req, res) => {
-  const usersData = getUsers()
+  const usersData = await getUsers()
   res.json(usersData)
 })
 
@@ -43,8 +45,10 @@ app.route('/orders')
   })
   .post(async (req, res) => {
     const newOrder = req.body
-    const newOrdersData = postOrder(newOrder)
-    res.json(newOrdersData)
+    const newOrdersData = await postOrder(newOrder)
+    res
+      .status(201)
+      .json(newOrdersData)
   })
 
 
