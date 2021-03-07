@@ -1,34 +1,22 @@
 class Repository {
     constructor(DBConnection) {
-        this.DBConnection = DBConnection
+        this.Database = DBConnection
     }
 
-    getUsers = () => {
-        return {
-            "user": "Bob"
-        }
+    getUsers = async () => {
+        return await this.Database.getUsers();
     }
-    getProducts = () => {
-        return {
-            "products": "Bananas"
-        }
+    getProducts = async () => {
+        return await this.Database.getProducts()
     }
     
-    getOrders = () => {
-        return {
-            "orders": "Some"
-        }
+    getOrders = async () => {
+        return await this.Database.getOrders()
     }
     
-    postOrder = (newOrder) => {
-        return [
-            {
-                "orders": "Some"
-            },
-            newOrder
-        ]
+    postOrder = async (newOrder) => {
+        return await this.Database.postOrder(newOrder)
     }
-
 }
 
 module.exports = Repository

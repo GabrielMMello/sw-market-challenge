@@ -3,19 +3,19 @@ class Services {
         this.Repository = RepositoryInstance;
     }
 
-    getUsers = () => {
-        return this.Repository.getUsers();
+    getUsers = async () => {
+        return await this.Repository.getUsers();
     }
-    getProducts = () => {
-        return this.Repository.getProducts()
-    }
-    
-    getOrders = () => {
-        return this.Repository.getOrders()
+    getProducts = async () => {
+        return await this.Repository.getProducts()
     }
     
-    postOrder = (newOrder) => {
-        return this.Repository.postOrder(newOrder)
+    getOrders = async () => {
+        return await this.Repository.getOrders()
+    }
+    
+    postOrder = async (newOrder) => {
+        return await this.Repository.postOrder(newOrder)
     }
 }
 

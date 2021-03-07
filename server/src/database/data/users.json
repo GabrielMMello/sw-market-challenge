@@ -1,0 +1,32 @@
+[
+  {
+    "id": "30055d31-43de-43b7-affb-eb76b760dd0e",
+    "name": "Darth Vader",
+    "imgURL": "http://localhost:8080/profilePics/Darth_Vader.jpg",
+    "token": "$2a$10$EC0.cAJNtm19YUeE1dOX3.V/pQQbJAWRAo94CLSp0aNz3PyO3.9Tq"
+  },
+  {
+    "id": "800cec97-3984-4efc-9f1c-17a7a3acbed3",
+    "name": "Obi-Wan Kenobi",
+    "imgURL": "http://localhost:8080/profilePics/Kenobi.jpg",
+    "token": "$2a$10$ELUbInq2qVzS7lpvKSWaoeSdoGAY3QvtGanD5G.G6MaVf3ekXySRm"
+  },
+  {
+    "id": "a9eeacbf-b043-426b-a5b3-69c7605689b2",
+    "name": "Luke Skywalker",
+    "imgURL": "http://localhost:8080/profilePics/Luke_Skywalker.jpg",
+    "token": "$2a$10$BEga0A.J14G.a8pXChPdledVFVm2kV4VIoeZU9ZW.ofGTtHoWZ8xS"
+  },
+  {
+    "id": "bbba255b-2d5c-476a-b399-0d6d4055514b",
+    "name": "Imperador Palpatine",
+    "imgURL": "http://localhost:8080/profilePics/Palpatine.jpg",
+    "token": "$2a$10$jDvQyRWqHx9e.54NBcT6O.srUn.lBQi8WxjcivXtLp3/17kQlmR0i"
+  },
+  {
+    "id": "6680cec9-da9c-4951-88c4-1d7cae62fa86",
+    "name": "Han Solo",
+    "imgURL": "http://localhost:8080/profilePics/Han_Solo.jpg",
+    "token": "$2a$10$jpFqQoN6NtKQ3gfVgB7wPuxey8w4wLzEkbwafYKcNIcqkyFdD7doW"
+  }
+]
