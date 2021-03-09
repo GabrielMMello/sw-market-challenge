@@ -3,9 +3,9 @@ import UserCard from './components/UserCard.js'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:8080/users'
+const BASE_URL = 'http://localhost:8080'
 
-function Login({ setAuth, setToken }) {
+function Login({ setAuth, setToken, fetchOrders }) {
     const [isFetching, setIsFetching] = useState(true)
     const [users, setUsers] = useState([])
 
@@ -14,7 +14,7 @@ function Login({ setAuth, setToken }) {
     }, [isFetching])
 
     const fetchData = async () => {
-        const users = (await axios.get(BASE_URL)).data
+        const users = (await axios.get(BASE_URL + '/users')).data
         setUsers(users)
         setIsFetching(false)
     }
@@ -22,6 +22,7 @@ function Login({ setAuth, setToken }) {
     const handleClick = (token) => {
         setToken(token)
         setAuth(true)
+        fetchOrders(token)
     }
     
     return (
