@@ -1,6 +1,6 @@
 function UserCard({ user, onClick }) {
     const handleClick = () => {
-        onClick(user.id)
+        onClick(user.token)
     }
 
     return (

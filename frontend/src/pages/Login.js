@@ -1,25 +1,29 @@
 import UserCard from './components/UserCard.js'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
+const BASE_URL = 'http://localhost:8080/users'
 
 function Login({ setAuth, setToken }) {
-    const [users, setUsers] = useState([
-        {id: 1, name: "Darth Vader"},
-        {id: 2, name: "Obi-Wan Kenobi"},
-        {id: 3, name: "Luke Skywalker"},
-        {id: 4, name: "Imperador Palpatine"},
-        {id: 5, name: "Han Solo"}
-    ])
-    const handleClick = (userId) => {
-        const token = fetchToken(userId)
+    const [isFetching, setIsFetching] = useState(true)
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        if(isFetching) fetchData()
+    }, [isFetching])
+
+    const fetchData = async () => {
+        const users = (await axios.get(BASE_URL)).data
+        setUsers(users)
+        setIsFetching(false)
+    }
+
+    const handleClick = (token) => {
         setToken(token)
         setAuth(true)
     }
     
-      const fetchToken = (userId) => {
-        return 'token'
-    }
-
     return (
         <div className="login">
             {users.map(user => <UserCard key={user.id} user={user} onClick={handleClick} />)}
