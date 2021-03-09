@@ -49,12 +49,12 @@ function ProductList() {
         }
       ])
 
-      let history = useHistory()
-    
-      const handleClick = () => {
-        history.push('/orders')
-      }
-    
+    let history = useHistory()
+  
+    const handleClick = () => {
+      history.push('/orders')
+    }
+
     return (
         <div className="productList">
             { products.map(product => <ProductCard product={ product } />) }
