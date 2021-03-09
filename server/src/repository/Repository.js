@@ -10,12 +10,20 @@ class Repository {
         return await this.Database.getProducts()
     }
     
-    getOrders = async () => {
-        return await this.Database.getOrders()
+    getUserOrders = async (userId) => {
+        return await this.Database.getUserOrders(userId)
     }
     
-    postOrder = async (newOrder) => {
-        return await this.Database.postOrder(newOrder)
+    postOrder = async ({ newOrder, userId}) => {
+        return await this.Database.postOrder({ newOrder, userId})
+    }
+
+    findUserByToken = async (token) => {
+        const result = await this.Database.findUser({ token })
+
+        if (result.hasOwnProperty("message") && result.message === "Not found") return {error: "Invalid token"}
+
+        return result.data.id
     }
 }
 
