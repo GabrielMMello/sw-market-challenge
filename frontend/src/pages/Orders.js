@@ -1,6 +1,28 @@
+import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import axios from 'axios'
 
-function Orders({ orders }) {
+const BASE_URL = 'http://localhost:8080'
+
+function Orders({ token }) {
+    const [isFetching, setIsFetching] = useState(true)
+    const [orders, setOrders] = useState([])
+
+    useEffect(() => {
+        if(isFetching) fetchOrders()
+    }, [isFetching])
+
+    const fetchOrders = async () => {
+        let config = {
+            headers: {
+                "Authentication": token,
+            }
+        }
+
+        const orders = (await axios.get((BASE_URL + '/orders'), config)).data
+        setOrders(orders)
+    }
+
     let history = useHistory()
 
     const handleClick = () => {
@@ -12,7 +34,7 @@ function Orders({ orders }) {
             {orders.length === 0 ? <p>No orders</p>
             : <ul>
                 {orders.map(order => 
-                <li>
+                <li key={order.id}>
                     <p>Order id: {order.id}</p>
                     {order.products.map(product => {
                     return (
