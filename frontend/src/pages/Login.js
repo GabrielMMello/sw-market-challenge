@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const BASE_URL = 'http://localhost:8080'
 
-function Login({ setAuth, setToken, fetchOrders }) {
+function Login({ setAuth, setToken }) {
     const [isFetching, setIsFetching] = useState(true)
     const [users, setUsers] = useState([])
 
@@ -22,7 +22,6 @@ function Login({ setAuth, setToken, fetchOrders }) {
     const handleClick = (token) => {
         setToken(token)
         setAuth(true)
-        fetchOrders(token)
     }
     
     return (

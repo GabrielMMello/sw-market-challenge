@@ -9,44 +9,41 @@ import {
   Route,
   Redirect
 } from 'react-router-dom'
-import axios from 'axios'
 
 import './App.css';
 
-const BASE_URL = 'http://localhost:8080'
 
 function App() {
   const [auth, setAuth] = useState(false)
   const [token, setToken] = useState('')
-  const [orders, setOrders] = useState([])
-
-  const fetchOrders = async (token) => {
-    let config = {
-      headers: {
-        "Authentication": token,
-      }
-    }
-
-    const orders = (await axios.get((BASE_URL + '/orders'), config)).data
-    setOrders(orders)
-  }
 
   return (
     <div className="App">
       <BrowserRouter>
         <Switch>
+
           <Route exact path="/">
             {auth ? <Redirect to='/products' />
-            : <Login setAuth={ setAuth } setToken={ setToken } fetchOrders={ fetchOrders } />}
+            : <Login
+                setAuth={ setAuth }
+                setToken={ setToken }
+              />}
           </Route>
+
           <Route path="/products">
-            {auth ? <ProductList token={ token } setToken={ setToken } fetchOrders={ fetchOrders } />
+            {auth ? <ProductList
+                      token={ token }
+                      setAuth={ setAuth }
+                      setToken={ setToken }
+                    />
             : <Redirect to='/' />}
           </Route>
+
           <Route path="/orders">
-            {auth ? <Orders orders={ orders } />
+            {auth ? <Orders token={ token } />
             : <Redirect to='/' />}
           </Route>
+          
         </Switch>
       </BrowserRouter>
     </div>
