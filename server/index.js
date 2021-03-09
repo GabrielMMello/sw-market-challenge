@@ -1,18 +1,22 @@
 const express = require('express')
-const PORT = 8080
+require('dotenv').config()
+const cors = require('cors')
+const PORT = process.env.PORT
+const path = require('path')
 
-const Services = require('./src/services/Services.js')
-const Repository = require('./src/repository/Repository.js')
-const Database = require('./src/database/Database.js')
+const Services = require(path.join(__dirname, './src/services/Services.js'))
+const Repository = require(path.join(__dirname, './src/repository/Repository.js'))
+const Database = require(path.join(__dirname, './src/database/Database.js'))
 
-const DBConnection = (new Database(__dirname + '/src/database/data/')).connect()
+const DBConnection = (new Database(path.join(__dirname, '/src/database/data/'))).connect()
 const RepositoryInstance = new Repository(DBConnection)
 
 const {
   getUsers,
   getProducts,
-  getOrders,
-  postOrder
+  getUserOrders,
+  postOrder,
+  authenticateUser
 } = new Services(RepositoryInstance)
 
 const HOME_MESSAGE = {
@@ -20,9 +24,10 @@ const HOME_MESSAGE = {
 }
 
 const app = express()
-const dir = __dirname + '/public'
+const dir = path.join(__dirname, '/public')
 app.use(express.static(dir));
 app.use(express.json())
+// app.use(cors({ origin: 'http://localhost:3000'}))
 
 app.get('/', (_req, res) => {
   res.json(HOME_MESSAGE)
@@ -39,16 +44,35 @@ app.get('/products', async (_req, res) => {
 })
 
 app.route('/orders')
-  .get(async (_req, res) => {
-    const ordersData = await getOrders()
-    res.json(ordersData)
+  .get(async (req, res) => {
+    const {isAuthenticated, userId} = await authenticateUser(req.headers.authentication)
+
+    if(!isAuthenticated) {
+      res
+        .status(400)
+        .json({error: "Unauthorized"})
+    } 
+    else {
+      const ordersData = await getUserOrders(userId)
+      res.json(ordersData)
+    }
   })
   .post(async (req, res) => {
-    const newOrder = req.body
-    const newOrdersData = await postOrder(newOrder)
-    res
-      .status(201)
-      .json(newOrdersData)
+    const {isAuthenticated, userId} = await authenticateUser(req.headers.authentication)
+
+    if(!isAuthenticated) {
+      res
+        .status(400)
+        .json({error: "Unauthorized"})
+    } 
+    else {
+      const newOrder = req.body
+      const newOrdersData = await postOrder({ newOrder, userId})
+      res
+        .status(201)
+        .json(newOrdersData)
+    }
+
   })
 
 
