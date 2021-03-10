@@ -18,7 +18,7 @@ function App() {
   const [token, setToken] = useState('')
 
   return (
-    <div className="App">
+    <div className="App container-fluid d-flex justify-content-center align-items-center p-3" style={{backgroundColor: "black", height: "100vh"}}>
       <BrowserRouter>
         <Switch>
 

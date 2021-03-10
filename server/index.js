@@ -24,10 +24,11 @@ const HOME_MESSAGE = {
 }
 
 const app = express()
-const dir = path.join(__dirname, '/public')
-app.use(express.static(dir));
 app.use(express.json())
 app.use(cors({ origin: 'http://localhost:3000'}))
+
+const dir = path.join(__dirname, '/public')
+app.use(express.static(dir))
 
 app.get('/', (_req, res) => {
   res.json(HOME_MESSAGE)
