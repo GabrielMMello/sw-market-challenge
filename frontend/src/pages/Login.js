@@ -23,10 +23,13 @@ function Login({ setAuth, setToken }) {
         setToken(token)
         setAuth(true)
     }
-    
+
     return (
-        <div className="login">
-            {users.map(user => <UserCard key={user.id} user={user} onClick={handleClick} />)}
+        <div>
+            <h1 className="text-warning">Star Wars Market - Login</h1>
+            <div className="login card bg-dark align-items-center p-3 card-group">
+                {users.map(user => <UserCard key={user.id} user={user} onClick={handleClick} />)}
+            </div>
         </div>
     )
 }

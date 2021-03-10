@@ -55,9 +55,12 @@ function ProductList({ token, setAuth, setToken, setOrders }) {
   }
 
   return (
-      <div className="productList">
-
-          { products.map(product => 
+    <div>
+      <h1 className="text-warning">Star Wars Market - Products</h1>
+      <div className="productList card bg-dark align-items-center p-3 text-light rounded-3">
+        
+        <div className="card-body card-group">
+          { products.map((product, index, arr) =>
               <ProductCard
                 key={product.id}
                 product={ product }
@@ -65,12 +68,18 @@ function ProductList({ token, setAuth, setToken, setOrders }) {
               />
             )
           }
+        </div>
 
-          <p>Total: R$ {(products.reduce((total, product) => total + product.price * ((product.hasOwnProperty("quantity") && product.quantity) || 0), 0) / 100).toFixed(2).toString().replace('.', ',')}</p>
-          <button onClick={ handleSubmit }>Submit</button>
-          <button onClick={ handleLogout }>Logout</button>
-          <button onClick={ handleClick }>Orders</button>
+        <div className="card-footer">
+          <p style={{fontSize: "1.5em"}}>Total: R$ {(products.reduce((total, product) => total + product.price * ((product.hasOwnProperty("quantity") && product.quantity) || 0), 0) / 100).toFixed(2).toString().replace('.', ',')}</p>
+          <div>
+            <button className="btn-warning m-2 border-0" style={{boxShadow: "0px 0px 15px black"}} onClick={ handleSubmit }>Submit</button>
+            <button className="btn-secondary m-2 border-0" style={{boxShadow: "0px 0px 15px black"}} onClick={ handleLogout }>Logout</button>
+            <button className="btn-warning m-2 border-0" style={{boxShadow: "0px 0px 15px black"}} onClick={ handleClick }>Orders</button>
+          </div>
+        </div>
       </div>
+    </div>
   )
 }
 
