@@ -12,7 +12,7 @@
 
 
 <h4 align="center"> 
-	 Status: Finished
+	 Status: Unfinished
 </h4>
 
 <p align="center">
@@ -28,6 +28,8 @@
 ## Sobre
 
 Este é o projeto de um simulador de e-commerce onde é possível escolher um de cinco usuários pré-cadastrados e realizar pedidos. Além disso, é possível consultar os pedidos já realizados.
+
+![swm-main-page](https://user-images.githubusercontent.com/66647120/110572810-eed4b080-8138-11eb-8ff8-41c0e0b58957.png)
 
 ---
 
