@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
+import OrderCard from './components/OrderCard'
+
 const BASE_URL = 'http://localhost:8080'
 
 function Orders({ token }) {
@@ -37,18 +39,7 @@ function Orders({ token }) {
                 : <ul style={{overflowY: "scroll"}}>
                     {orders.map(order => 
                     <li key={order.id} style={{boxShadow: "0px 0px 15px black", backgroundColor: "#323B44", listStyle: "none"}}>
-                        <div>
-                            {order.products.map(product => {
-                            return (
-                                <div style={{border: "1px solid black"}}>
-                                    <h6 className="card-title h-100 m-0 font-weight-bold card-header" style={{lineHeight: "100%"}}>Product: {product.name}</h6>
-                                    <p className="card-text mt-1" style={{fontSize: "0.7em", color: "#B5B5B5"}}>Quantity: {product.quantity}</p>
-                                    <p><span className="card-text my-0"  style={{fontSize: "0.9em", color: "#B5B5B5"}}>Subtotal</span> R$ {(product.price * product.quantity / 100).toFixed(2).toString().replace('.', ',')}</p>
-                                </div>
-                            )
-                            }) }
-                            <p className="card-footer" style={{border: "1px solid black", fontSize: "1.1em"}}>Total: R$ {(order.products.reduce((total, product) => total + product.price * product.quantity, 0) / 100).toFixed(2).toString().replace('.', ',')}</p>
-                        </div>
+                        <OrderCard order={ order }/>
                     </li>
                     ) }
                 </ul>
