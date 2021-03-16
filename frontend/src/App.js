@@ -1,4 +1,4 @@
-import Login from './pages/Login.js'
+import Clients from './pages/Clients.js'
 import Orders from './pages/Orders.js'
 import ProductList from './pages/ProductList.js'
 
@@ -24,7 +24,7 @@ function App() {
 
           <Route exact path="/">
             {auth ? <Redirect to='/products' />
-            : <Login
+            : <Clients
                 setAuth={ setAuth }
                 setToken={ setToken }
               />}
