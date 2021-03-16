@@ -1,41 +1,30 @@
-import ProductCard from './components/ProductCard.js'
-
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import{ useHistory } from 'react-router-dom'
 import axios from 'axios'
+
+import ProductCard from './components/ProductCard.js'
+import OrderCard from './components/OrderCard.js'
 
 const BASE_URL = 'http://localhost:8080'
 
 function ProductList({ token, setAuth, setToken, setOrders }) {
-  const [isFetching, setIsFetching] = useState(true)
-  const [products, setProducts] = useState([])
-
-  useEffect(() => {
-    if(isFetching) fetchData()
-  }, [isFetching])
-
-  const fetchData = async () => {
-    const products = (await axios.get(BASE_URL + '/products')).data
-    setProducts(products)
-    setIsFetching(false)
-  }
+  const DEFAULT_ORDER = {client: token, products: []}
+  const [newOrder, setNewOrder] = useState(DEFAULT_ORDER)
 
   let history = useHistory()
 
-  const handleClick = () => {
+  const handleOrdersBtnClick = () => {
     history.push('/orders')
   }
 
-  const handleChange = ({productId, quantity}) => {
-    const index = products.findIndex(product => product.id === productId)
-    let productsCopy = [...products]
-    productsCopy[index] = {...products[index], quantity}
-    setProducts(productsCopy)
+  const handleLogoutBtnClick = () => {
+    setAuth(false)
+    setToken('')
+    history.push('/')
   }
 
   const handleSubmit = () => {
     postOrder()
-    fetchData()
   }
 
   const postOrder = async () => {
@@ -44,14 +33,21 @@ function ProductList({ token, setAuth, setToken, setOrders }) {
         "Authentication": token,
       }
     }
-    const newOrder = {products: products.filter(product => product.hasOwnProperty("quantity") && product.quantity > 0)}
-    newOrder.hasOwnProperty("products") && newOrder.products.length > 0 && await axios.post((BASE_URL + '/orders'), newOrder, config)
+    newOrder.hasOwnProperty("products")
+    && newOrder.products.length > 0
+    && await axios.post((BASE_URL + '/orders'), newOrder, config)
   }
 
-  const handleLogout = () => {
-    setAuth(false)
-    setToken('')
-    history.push('/')
+  const calculateTotal = () => {
+    const rawValue = newOrder.products.reduce((total, product) => 
+      total + product.price * (product.quantity || 0), 0)
+      return formatValue(rawValue)
+    }
+  const formatValue = (rawValue) => {
+    return (rawValue / 100)
+              .toFixed(2)
+              .toString()
+              .replace('.', ',')
   }
 
   return (
@@ -59,23 +55,46 @@ function ProductList({ token, setAuth, setToken, setOrders }) {
       <h1 className="text-warning">Star Wars Market - Products</h1>
       <div className="productList card bg-dark align-items-center p-3 text-light rounded-3">
         
-        <div className="card-body card-group">
-          { products.map((product, index, arr) =>
-              <ProductCard
-                key={product.id}
-                product={ product }
-                onChange={ handleChange } 
-              />
-            )
-          }
+        <div className="card-body d-flex align-items-center">
+          <ProductCard
+            order={ newOrder }
+            setOrder={ setNewOrder } 
+          />
+          <div style={{maxHeight: 300, overflowY: newOrder.products.length > 0 ? "scroll" : "hidden"}}>
+            <OrderCard
+              order={ newOrder }
+              setOrder={ setNewOrder } 
+            />
+          </div>
         </div>
-
         <div className="card-footer">
-          <p style={{fontSize: "1.5em"}}>Total: R$ {(products.reduce((total, product) => total + product.price * ((product.hasOwnProperty("quantity") && product.quantity) || 0), 0) / 100).toFixed(2).toString().replace('.', ',')}</p>
+          {/* <p style={{fontSize: "1.5em"}}>Total: R$ {calculateTotal()}</p> */}
           <div>
-            <button className="btn-warning m-2 border-0" style={{boxShadow: "0px 0px 15px black"}} onClick={ handleSubmit }>Submit</button>
-            <button className="btn-secondary m-2 border-0" style={{boxShadow: "0px 0px 15px black"}} onClick={ handleLogout }>Logout</button>
-            <button className="btn-warning m-2 border-0" style={{boxShadow: "0px 0px 15px black"}} onClick={ handleClick }>Orders</button>
+
+            <button
+              className="btn-warning m-2 border-0"
+              style={{boxShadow: "0px 0px 15px black"}}
+              onClick={ handleSubmit }
+            >
+              Submit
+            </button>
+
+            <button
+              className="btn-danger m-2 border-0"
+              style={{boxShadow: "0px 0px 15px black"}}
+              onClick={ handleLogoutBtnClick }
+            >
+              Logout
+            </button>
+
+            <button
+              className="btn-warning m-2 border-0"
+              style={{boxShadow: "0px 0px 15px black"}}
+              onClick={ handleOrdersBtnClick }
+            >
+              Orders
+            </button>
+            
           </div>
         </div>
       </div>
