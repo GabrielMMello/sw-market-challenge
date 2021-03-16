@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 import OrderCard from './components/OrderCard'
+import Button from './components/Button'
 
 const BASE_URL = 'http://localhost:8080'
 
@@ -34,6 +35,7 @@ function Orders({ token }) {
     return (
         <div className="h-100">
             <h1 className="text-warning">Star Wars Market - Orders</h1>
+            
             <div className="orders card bg-dark h-75 p-3 text-light rounded-3 my-3 mx-auto" style={{width: "30vw"}}>
                 {orders.length === 0 ? <p>No orders</p>
                 : <ul style={{overflowY: "scroll"}}>
@@ -44,8 +46,13 @@ function Orders({ token }) {
                     ) }
                 </ul>
                 }
+
                 <div className="card-footer w-100">
-                    <button className="btn-warning m-2 border-0" style={{boxShadow: "0px 0px 15px black"}} onClick={ handleClick }>Buy more</button>
+                    <Button
+                        color="btn-warning"
+                        onClick={ handleClick }
+                        text="New order"
+                    />
                 </div>
             </div>
         </div>

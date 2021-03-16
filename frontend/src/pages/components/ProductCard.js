@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import Button from './Button'
 
 const BASE_URL = 'http://localhost:8080'
 
@@ -163,7 +164,12 @@ function ProductCard({ order, setOrder }) {
             <div className="card-footer w-100">
                 <p className="card-text my-0"  style={{fontSize: "0.9em", color: "#B5B5B5"}}>Subtotal</p>
                 <p className="card-text"> R$ { calculateSubtotal(selectedProduct) }</p>
-                <button disabled={isAddBtnDisabled()} className={"border-0 m-2 " + (isAddBtnDisabled() ? "btn-dark" : "btn-primary")} style={{boxShadow: "0px 0px 15px black"}} onClick={handleAddBtnClick}>Update order</button>
+                <Button
+                    color={(isAddBtnDisabled() ? "btn-dark" : "btn-primary")}
+                    onClick={ handleAddBtnClick }
+                    disabled={isAddBtnDisabled()}
+                    text="Update order"
+                />
             </div>
         </div>
     )
