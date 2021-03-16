@@ -2,6 +2,7 @@ import UserCard from './components/UserCard.js'
 
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import Button from './components/Button.js'
 
 const BASE_URL = 'http://localhost:8080'
 
@@ -50,7 +51,11 @@ setSelectedUser(users[0])
                         {users.map(user => <option key={user.id} value={user.id}>{user.name}</option>)}
                     </select>
                     <UserCard user={selectedUser} />
-                    <button className="btn-warning m-2 border-0" style={{boxShadow: "0px 0px 15px black"}} onClick={handleClick}>Choose this client</button>
+                    <Button
+                        color="btn-warning"
+                        onClick={ handleClick }
+                        text="Choose this client"
+                    />
                 </div>
             </div>
         </div>

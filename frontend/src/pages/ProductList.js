@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import ProductCard from './components/ProductCard.js'
 import OrderCard from './components/OrderCard.js'
+import Button from './components/Button.js'
 
 const BASE_URL = 'http://localhost:8080'
 
@@ -38,18 +39,6 @@ function ProductList({ token, setAuth, setToken, setOrders }) {
     && await axios.post((BASE_URL + '/orders'), newOrder, config)
   }
 
-  const calculateTotal = () => {
-    const rawValue = newOrder.products.reduce((total, product) => 
-      total + product.price * (product.quantity || 0), 0)
-      return formatValue(rawValue)
-    }
-  const formatValue = (rawValue) => {
-    return (rawValue / 100)
-              .toFixed(2)
-              .toString()
-              .replace('.', ',')
-  }
-
   return (
     <div>
       <h1 className="text-warning">Star Wars Market - Products</h1>
@@ -67,34 +56,24 @@ function ProductList({ token, setAuth, setToken, setOrders }) {
             />
           </div>
         </div>
+        
         <div className="card-footer">
-          {/* <p style={{fontSize: "1.5em"}}>Total: R$ {calculateTotal()}</p> */}
           <div>
-
-            <button
-              className="btn-warning m-2 border-0"
-              style={{boxShadow: "0px 0px 15px black"}}
+            <Button
+              color="btn-warning"
               onClick={ handleSubmit }
-            >
-              Submit
-            </button>
-
-            <button
-              className="btn-danger m-2 border-0"
-              style={{boxShadow: "0px 0px 15px black"}}
+              text="Submit"
+            />
+            <Button
+              color="btn-danger"
               onClick={ handleLogoutBtnClick }
-            >
-              Logout
-            </button>
-
-            <button
-              className="btn-warning m-2 border-0"
-              style={{boxShadow: "0px 0px 15px black"}}
+              text="Change client"
+            />
+            <Button
+              color="btn-warning"
               onClick={ handleOrdersBtnClick }
-            >
-              Orders
-            </button>
-            
+              text="Orders"
+            />
           </div>
         </div>
       </div>
