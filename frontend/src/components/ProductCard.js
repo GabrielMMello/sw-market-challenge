@@ -49,7 +49,9 @@ function ProductCard({ order, setOrder }) {
 
     // Definir o preço do produto
     const handlePriceChange = (e) => {
-        const price = e.target.value.replace(',', "")
+        const price = e.target.value
+                        .replace(/\./g, "")
+                        .replace(',', "")
         const isValid = /^\d+$/.test(price)
         if(isValid) {
             setSelectedProduct({...selectedProduct, price })
@@ -64,25 +66,46 @@ function ProductCard({ order, setOrder }) {
             return "bad"
         }
     })()
-    console.log(profitability)
+
     // Adicionar no pedido
-    const isAddBtnDisabled = () => {
-        const defaultProduct = products.find(product => product.id === selectedProduct.id)
-        return !(
-            !isFetching
-            && selectedProduct.id !== "0"
-            && selectedProduct.quantity >= 0
-            && ["great", "good"].includes(profitability)
-        )
-    }
+    const isAddBtnDisabled = (() => {
+        const productInOrder = order.products.find(product => product.id === selectedProduct.id)
+
+        if(!isFetching && selectedProduct.id !== "0") {
+            if(selectedProduct.quantity > 0 && ["great", "good"].includes(profitability)) return false
+            if(selectedProduct.quantity > 0 && !["great", "good"].includes(profitability)) return true
+            if(!productInOrder) return true
+            return false
+        }
+        else return true
+    })()
+
+    const getAddBtnText = (() => {
+        if(selectedProduct.quantity > 0) {
+            if(isAddBtnDisabled) return "Low price!"
+            return "Update order"
+        }
+
+        const productInOrder = order.products.find(product => product.id === selectedProduct.id)
+        if(!isFetching && productInOrder && productInOrder.quantity > 0) return "Remove"
+        return "Low quantity!"
+    })()
+
+    const getAddBtnColor = (() => {
+        switch (getAddBtnText) {
+            case "Update order": return "btn-primary"
+            case "Remove": return "btn-danger"
+            default: return "btn-dark"
+        }
+    })()
+
     const handleAddBtnClick = () => {
-        console.log("hi")
         const productIndexInOrder = order.products.findIndex(product => product.id === selectedProduct.id)
 
         if(selectedProduct.quantity > 0) {
             if(productIndexInOrder < 0) {
                 const newOrderData = {
-                    client: order.client,
+                    ...order,
                     products: [...order.products, selectedProduct]}
                 setOrder(newOrderData)
             }
@@ -90,7 +113,7 @@ function ProductCard({ order, setOrder }) {
                 let newProductsData = [...order.products]
                 newProductsData[productIndexInOrder] = selectedProduct
                 const newOrderData = {
-                    client: order.client,
+                    ...order,
                     products: newProductsData
                 }
                 setOrder(newOrderData)
@@ -101,14 +124,14 @@ function ProductCard({ order, setOrder }) {
             const productsAfter = order.products.slice(productIndexInOrder + 1)
             const newProductsData = [...productsBefore, ...productsAfter]
             const newOrderData = {
-                client: order.client,
+                ...order,
                 products: newProductsData
             }
             setOrder(newOrderData)
         }
     }
 
-
+    // Utilidades
     const calculateSubtotal = (product) => {
         const rawValue = product.price * product.quantity
         return formatValue(rawValue)
@@ -117,20 +140,26 @@ function ProductCard({ order, setOrder }) {
         return (rawValue / 100)
                 .toFixed(2)
                 .toString()
-                .replace('.', ',')
+                .split('')
+                .map((digit, index, arr) => ((arr.length - index - 3) % 3 === 0 && (arr.length - (index + 1)) > 0 && (arr.length - index - 3) / 3 > 0) && index > 0 ? "." + digit : digit)
+                .join('')
+                .replace(/.(\d\d)$/, ',$1')
     }
 
     return (
         <div className="productCard card text-center border-dark align-items-center m-3 rounded-3" style={{boxShadow: "0px 0px 15px black", backgroundColor: "#323B44", maxHeight: "300px"}}>
 
             <div className="card-header w-100 h-25 border-dark">
-            <select value={selectedProduct.id} onChange={handleSelectChange}>
-                { products.map(product => <option value={product.id}>{product.name}</option>) }
-            </select>
-                {/* <h6 className="card-title h-100 m-0 font-weight-bold" style={{lineHeight: "100%"}}>{ selectedProduct.name }</h6> */}
+                <select
+                    value={selectedProduct.id}
+                    onChange={handleSelectChange}
+                    style={{outline: "none"}}
+                >
+                    { products.map(product => <option value={product.id}>{product.name}</option>) }
+                </select>
             </div>
             <div className="card-body w-100">
-                {/* <p className="card-text" style={{color: "#E7E7E7"}}><span style={{fontSize: "0.75em", color: "#B5B5B5"}}>R$</span> { (selectedProduct.price / 100).toFixed(2).toString().replace('.', ',') } </p> */}
+
                 <p className="card-text" style={{color: "#E7E7E7"}}>
                     <span style={{fontSize: "0.75em", color: "#B5B5B5"}}>R$ </span>
                     <input
@@ -145,7 +174,7 @@ function ProductCard({ order, setOrder }) {
                     />
                     <p style={{fontSize: "0.7em"}}>{"Profitability: " + profitability}</p>
                 </p>
-                {/* <p className="text-danger">Please choose a higher price.</p> */}
+
                 <div className="d-flex p-1 justify-content-center">
                     <input
                         type="number"
@@ -165,10 +194,10 @@ function ProductCard({ order, setOrder }) {
                 <p className="card-text my-0"  style={{fontSize: "0.9em", color: "#B5B5B5"}}>Subtotal</p>
                 <p className="card-text"> R$ { calculateSubtotal(selectedProduct) }</p>
                 <Button
-                    color={(isAddBtnDisabled() ? "btn-dark" : "btn-primary")}
+                    color={ getAddBtnColor }
                     onClick={ handleAddBtnClick }
-                    disabled={isAddBtnDisabled()}
-                    text="Update order"
+                    disabled={ isAddBtnDisabled }
+                    text={ getAddBtnText }
                 />
             </div>
         </div>
