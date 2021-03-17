@@ -1,12 +1,12 @@
-import UserCard from './components/UserCard.js'
+import UserCard from '../components/UserCard.js'
 
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import Button from './components/Button.js'
+import Button from '../components/Button.js'
 
 const BASE_URL = 'http://localhost:8080'
 
-function Clients({ setAuth, setToken }) {
+function Clients({ setAuth, setUserToken }) {
     const [isFetching, setIsFetching] = useState(true)
     const [users, setUsers] = useState([])
 
@@ -29,7 +29,7 @@ setSelectedUser(users[0])
 
     const handleClick = () => {
         if(!isFetching) {
-            setToken(selectedUser.token)
+            setUserToken(selectedUser.token)
             setAuth(true)
         }
     }

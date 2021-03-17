@@ -15,7 +15,7 @@ import './App.css';
 
 function App() {
   const [auth, setAuth] = useState(false)
-  const [token, setToken] = useState('')
+  const [userToken, setUserToken] = useState('')
 
   return (
     <div className="App container-fluid d-flex justify-content-center align-items-center p-3" style={{backgroundColor: "black", height: "100vh"}}>
@@ -26,21 +26,21 @@ function App() {
             {auth ? <Redirect to='/products' />
             : <Clients
                 setAuth={ setAuth }
-                setToken={ setToken }
+                setUserToken={ setUserToken }
               />}
           </Route>
 
           <Route path="/products">
             {auth ? <ProductList
-                      token={ token }
+                      userToken={ userToken }
                       setAuth={ setAuth }
-                      setToken={ setToken }
+                      setUserToken={ setUserToken }
                     />
             : <Redirect to='/' />}
           </Route>
 
           <Route path="/orders">
-            {auth ? <Orders token={ token } />
+            {auth ? <Orders userToken={ userToken } />
             : <Redirect to='/' />}
           </Route>
           

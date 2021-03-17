@@ -2,13 +2,13 @@ import { useState } from 'react'
 import{ useHistory } from 'react-router-dom'
 import axios from 'axios'
 
-import ProductCard from './components/ProductCard.js'
-import OrderCard from './components/OrderCard.js'
-import Button from './components/Button.js'
+import ProductCard from '../components/ProductCard.js'
+import OrderCard from '../components/OrderCard.js'
+import Button from '../components/Button.js'
 
 const BASE_URL = 'http://localhost:8080'
 
-function ProductList({ token, setAuth, setToken, setOrders }) {
+function ProductList({ token, setAuth, setUserToken }) {
   const DEFAULT_ORDER = {client: token, products: []}
   const [newOrder, setNewOrder] = useState(DEFAULT_ORDER)
 
@@ -20,15 +20,11 @@ function ProductList({ token, setAuth, setToken, setOrders }) {
 
   const handleLogoutBtnClick = () => {
     setAuth(false)
-    setToken('')
+    setUserToken('')
     history.push('/')
   }
 
-  const handleSubmit = () => {
-    postOrder()
-  }
-
-  const postOrder = async () => {
+  const handleSubmit = async () => {
     let config = {
       headers: {
         "Authentication": token,
@@ -52,7 +48,6 @@ function ProductList({ token, setAuth, setToken, setOrders }) {
           <div style={{maxHeight: 300, overflowY: newOrder.products.length > 0 ? "scroll" : "hidden"}}>
             <OrderCard
               order={ newOrder }
-              setOrder={ setNewOrder } 
             />
           </div>
         </div>
@@ -60,9 +55,10 @@ function ProductList({ token, setAuth, setToken, setOrders }) {
         <div className="card-footer">
           <div>
             <Button
-              color="btn-warning"
+              color={newOrder.products.length > 0 ? "btn-warning" : "btn-dark"}
               onClick={ handleSubmit }
-              text="Submit"
+              text={newOrder.products.length > 0 ? "Submit" : "Add products!"}
+              disabled={newOrder.products.length === 0}
             />
             <Button
               color="btn-danger"
