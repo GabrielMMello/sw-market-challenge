@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-    Simulador de e-commerce com tema Star Wars
+    Simulador de plataforma de vendas com tema Star Wars
 </h3>
 
 <p align="center">
@@ -35,11 +35,11 @@ Este é o projeto de um simulador de e-commerce onde é possível escolher um de
 
 ## Recursos
 
-- [x] Frontend do e-commerse
-   - [x] Página de login
-   - [x] Página de compras
-    - [ ] O usuário escolhe o preço que deseja pagar
-    - [ ] Bloqueio de pedidos com valor escolhido inferior a 90% do valor original
+- [x] Frontend da plataforma de vendas
+   - [x] Página de seleção de clientes
+   - [x] Página de emissão de pedido
+    - [x] O usuário escolhe o preço do produto
+    - [x] Bloqueio de ação do usuário quando o preço escolhido for inferior a 90% do valor sugerido
    - [x] Página de lista de pedidos
    - [ ] Responsividade
    - [ ] Testes
