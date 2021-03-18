@@ -15,7 +15,15 @@ class Repository {
     }
     
     postOrder = async ({ newOrder, clientId}) => {
-        return await this.Database.postOrder({ newOrder, clientId})
+        return await this.Database.postOrder({ newOrder, clientId })
+    }
+
+    putOrder = async ({newOrderData, clientId}) => {
+        return await this.Database.putOrder({newOrderData, clientId })
+    }
+
+    deleteOrder = async ({ deletedOrderId, clientId}) => {
+        return await this.Database.deleteOrder({ deletedOrderId, clientId })
     }
 
     findClientByToken = async (token) => {

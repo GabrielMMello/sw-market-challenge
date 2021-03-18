@@ -14,8 +14,16 @@ class Services {
         return await this.Repository.getClientOrders(clientId)
     }
     
-    postOrder = async ({ newOrder, clientId}) => {
-        return await this.Repository.postOrder({ newOrder, clientId})
+    postOrder = async ({ newOrder, clientId }) => {
+        return await this.Repository.postOrder({ newOrder, clientId })
+    }
+
+    putOrder = async ({ newOrderData, clientId }) => {
+        return await this.Repository.putOrder({ newOrderData, clientId })
+    }
+
+    deleteOrder = async ({ deletedOrderId, clientId }) => {
+        return await this.Repository.deleteOrder({ deletedOrderId, clientId })
     }
 
     authenticateClient = async (token) => {

@@ -16,6 +16,8 @@ const {
   getProducts,
   getClientOrders,
   postOrder,
+  putOrder,
+  deleteOrder,
   authenticateClient
 } = new Services(RepositoryInstance)
 
@@ -68,12 +70,45 @@ app.route('/orders')
     } 
     else {
       const newOrder = req.body
-      const newOrdersData = await postOrder({ newOrder, clientId})
+      const newOrdersData = await postOrder({ newOrder, clientId })
       res
         .status(201)
         .json(newOrdersData)
     }
+  })
+  .put(async (req, res) => {
+    const {isAuthenticated, clientId} = await authenticateClient(req.headers.authentication)
 
+    if(!isAuthenticated) {
+      res
+        .status(400)
+        .json({error: "Unauthorized"})
+    } 
+    else {
+      const newOrderData = req.body
+      const newOrdersData = await putOrder({ newOrderData, clientId })
+      res
+        .status(201)
+        .json(newOrdersData)
+    }
+  })
+
+app.route('/orders/:orderId')
+  .delete(async (req, res) => {
+    const {isAuthenticated, clientId} = await authenticateClient(req.headers.authentication)
+console.log(req.params.orderId)
+    if(!isAuthenticated) {
+      res
+        .status(400)
+        .json({error: "Unauthorized"})
+    } 
+    else {
+      const deletedOrderId = req.params.orderId
+      const newOrdersData = await deleteOrder({ deletedOrderId, clientId })
+      res
+        .status(201)
+        .json(newOrdersData)
+    }
   })
 
 
