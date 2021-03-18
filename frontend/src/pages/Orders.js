@@ -8,7 +8,7 @@ import OrderEdit from '../components/OrderEdit'
 
 const BASE_URL = 'http://localhost:8080'
 
-function Orders({ userToken }) {
+function Orders({ clientToken }) {
     const [isFetching, setIsFetching] = useState(true)
     const [orders, setOrders] = useState([])
 
@@ -19,7 +19,7 @@ function Orders({ userToken }) {
     const fetchOrders = async () => {
         let config = {
             headers: {
-                "Authentication": userToken,
+                "Authentication": clientToken,
             }
         }
 
@@ -35,7 +35,7 @@ function Orders({ userToken }) {
     let history = useHistory()
 
     const handleClick = () => {
-      history.push('/products')
+      history.push('/new-order')
     }
   
     return (
@@ -47,7 +47,7 @@ function Orders({ userToken }) {
                 : isEditing ? 
                     <OrderEdit
                     order={ editingOrder }
-                    userToken={ userToken }
+                    clientToken={ clientToken }
                     setIsEditing={setIsEditing}
                     />
                     : <ul className="custom-scroll" style={{overflowY: "scroll"}}>

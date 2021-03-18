@@ -1,4 +1,3 @@
-import { useState } from "react"
 import Button from "./Button"
 
 function OrderCard({ order, setEditingOrder, setIsEditing, hasEditButton }) {
@@ -35,7 +34,7 @@ function OrderCard({ order, setEditingOrder, setIsEditing, hasEditButton }) {
             <div>
             {order.products.map(product => {
             return (
-                <div style={{border: "1px solid black"}}>
+                <div key={product.id} style={{border: "1px solid black"}}>
 
                     <h6
                         className="card-title h-100 m-0 font-weight-bold card-header"

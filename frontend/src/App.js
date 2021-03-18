@@ -1,6 +1,6 @@
 import Clients from './pages/Clients.js'
 import Orders from './pages/Orders.js'
-import ProductList from './pages/ProductList.js'
+import NewOrder from './pages/NewOrder.js'
 
 import { useState } from 'react'
 import {
@@ -15,7 +15,7 @@ import './App.css';
 
 function App() {
   const [auth, setAuth] = useState(false)
-  const [userToken, setUserToken] = useState('')
+  const [clientToken, setClientToken] = useState('')
 
   return (
     <div className="App container-fluid d-flex justify-content-center align-items-center p-3" style={{backgroundColor: "black", height: "100vh"}}>
@@ -23,24 +23,24 @@ function App() {
         <Switch>
 
           <Route exact path="/">
-            {auth ? <Redirect to='/products' />
+            {auth ? <Redirect to='/new-order' />
             : <Clients
                 setAuth={ setAuth }
-                setUserToken={ setUserToken }
+                setClientToken={ setClientToken }
               />}
           </Route>
 
-          <Route path="/products">
-            {auth ? <ProductList
-                      userToken={ userToken }
+          <Route path="/new-order">
+            {auth ? <NewOrder
+                      clientToken={ clientToken }
                       setAuth={ setAuth }
-                      setUserToken={ setUserToken }
+                      setClientToken={ setClientToken }
                     />
             : <Redirect to='/' />}
           </Route>
 
           <Route path="/orders">
-            {auth ? <Orders userToken={ userToken } />
+            {auth ? <Orders clientToken={ clientToken } />
             : <Redirect to='/' />}
           </Route>
           

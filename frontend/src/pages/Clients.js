@@ -1,4 +1,4 @@
-import UserCard from '../components/UserCard.js'
+import ClientCard from '../components/ClientCard.js'
 
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -6,30 +6,30 @@ import Button from '../components/Button.js'
 
 const BASE_URL = 'http://localhost:8080'
 
-function Clients({ setAuth, setUserToken }) {
+function Clients({ setAuth, setClientToken }) {
     const [isFetching, setIsFetching] = useState(true)
-    const [users, setUsers] = useState([])
+    const [clients, setClients] = useState([])
 
     useEffect(() => {
         if(isFetching) fetchData()
     }, [isFetching])
 
     const fetchData = async () => {
-        const users = (await axios.get(BASE_URL + '/users')).data
-        setUsers(users)
-setSelectedUser(users[0])
+        const clients = (await axios.get(BASE_URL + '/clients')).data
+        setClients(clients)
+        setSelectedClient(clients[0])
         setIsFetching(false)
     }
 
-    const [selectedUser, setSelectedUser] = useState({id: '', name: '', imgURL:'', token: ''})
+    const [selectedClient, setSelectedClient] = useState({id: '', name: '', imgURL:'', token: ''})
     const handleSelectChange = (e) => {
-        const user = users.find(user => user.id === e.target.value)
-        setSelectedUser(user)
+        const client = clients.find(client => client.id === e.target.value)
+        setSelectedClient(client)
     }
 
     const handleClick = () => {
         if(!isFetching) {
-            setUserToken(selectedUser.token)
+            setClientToken(selectedClient.token)
             setAuth(true)
         }
     }
@@ -44,13 +44,13 @@ setSelectedUser(users[0])
                 <div className="card-body card bg-secondary text-dark border-dark">
                     <select 
                         className="card-header bg-light"
-                        value={selectedUser.id}
+                        value={selectedClient.id}
                         onChange={handleSelectChange}
                         style={{outline: "none"}}
                     >
-                        {users.map(user => <option key={user.id} value={user.id}>{user.name}</option>)}
+                        {clients.map(client => <option key={client.id} value={client.id}>{client.name}</option>)}
                     </select>
-                    <UserCard user={selectedUser} />
+                    <ClientCard client={selectedClient} />
                     <Button
                         color="btn-warning"
                         onClick={ handleClick }

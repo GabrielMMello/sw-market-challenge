@@ -3,29 +3,29 @@ class Services {
         this.Repository = RepositoryInstance;
     }
 
-    getUsers = async () => {
-        return await this.Repository.getUsers();
+    getClients = async () => {
+        return await this.Repository.getClients();
     }
     getProducts = async () => {
         return await this.Repository.getProducts()
     }
     
-    getUserOrders = async (userId) => {
-        return await this.Repository.getUserOrders(userId)
+    getClientOrders = async (clientId) => {
+        return await this.Repository.getClientOrders(clientId)
     }
     
-    postOrder = async ({ newOrder, userId}) => {
-        return await this.Repository.postOrder({ newOrder, userId})
+    postOrder = async ({ newOrder, clientId}) => {
+        return await this.Repository.postOrder({ newOrder, clientId})
     }
 
-    authenticateUser = async (token) => {
-        const result = await this.Repository.findUserByToken(token)
+    authenticateClient = async (token) => {
+        const result = await this.Repository.findClientByToken(token)
 
-        if(result.hasOwnProperty("error")) return { isAuthenticated: false, user: undefined}
+        if(result.hasOwnProperty("error")) return { isAuthenticated: false, client: undefined}
 
         return {
             isAuthenticated: true,
-            userId: result
+            clientId: result
         }
     }
 }

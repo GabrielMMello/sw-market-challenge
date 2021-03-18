@@ -7,7 +7,7 @@ import Button from './Button.js'
 
 const BASE_URL = 'http://localhost:8080'
 
-function OrderEdit({ order, userToken, setIsEditing }) {
+function OrderEdit({ order, clientToken, setIsEditing }) {
   const [newOrder, setNewOrder] = useState(order)
 
   const handleCancelBtnClick = () => {
@@ -17,7 +17,7 @@ function OrderEdit({ order, userToken, setIsEditing }) {
   const handleSubmit = async () => {
       let config = {
         headers: {
-          "Authentication": userToken,
+          "Authentication": clientToken,
         }
       }
       newOrder.hasOwnProperty("products")
@@ -28,7 +28,7 @@ function OrderEdit({ order, userToken, setIsEditing }) {
   const handleSubmitDelete = async () => {
     const config = {
       headers: {
-        "Authentication": userToken,
+        "Authentication": clientToken,
       }
     }
     const body = {

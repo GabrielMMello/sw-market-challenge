@@ -12,11 +12,11 @@ class Database {
         return this
     }
 
-    getUsers = async () => {
-        const filePath = path.join(this.filesFolder + 'users.json')
-        const rawUsersData = await readFile(filePath)
-        const users = JSON.parse(rawUsersData)
-        return users
+    getClients = async () => {
+        const filePath = path.join(this.filesFolder + 'clients.json')
+        const rawClientsData = await readFile(filePath)
+        const clients = JSON.parse(rawClientsData)
+        return clients
     }
     
     getProducts = async () => {
@@ -26,16 +26,16 @@ class Database {
         return products
     }
     
-    getUserOrders = async (userId) => {
+    getClientOrders = async (clientId) => {
         const filePath = path.join(this.filesFolder + 'orders.json')
         const rawOrdersData = await readFile(filePath)
         const allOrders = JSON.parse(rawOrdersData)
-        const userOrders = allOrders.filter(order => order.userId === userId)
+        const clientOrders = allOrders.filter(order => order.clientId === clientId)
 
-        return userOrders
+        return clientOrders
     }
     
-    postOrder = async ({ newOrder, userId}) => {
+    postOrder = async ({ newOrder, clientId}) => {
         const filePath = path.join(this.filesFolder + 'orders.json')
         const rawOldOrdersData = await readFile(filePath)
         const oldOrders = JSON.parse(rawOldOrdersData)
@@ -43,22 +43,22 @@ class Database {
         const newId = this.generateId()
         const newOrderData = {
           id: newId,
-          userId,
+          clientId,
           ...newOrder
           }
     
         const newOrdersData = [...oldOrders, newOrderData]
         await writeFile(filePath, JSON.stringify(newOrdersData))
-        return await this.getUserOrders(userId)
+        return await this.getClientOrders(clientId)
     }
 
     generateId = () => {
         return uuidv4()
     }
 
-    findUser = async ({ token }) => {
-        const users = await this.getUsers()
-        const data = users.find(user => user.token === token)
+    findClient = async ({ token }) => {
+        const clients = await this.getClients()
+        const data = clients.find(client => client.token === token)
 
         if(data === undefined) return {message: "Not found"}
 
