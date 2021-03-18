@@ -45,7 +45,7 @@ function ProductList({ token, setAuth, setUserToken }) {
             order={ newOrder }
             setOrder={ setNewOrder } 
           />
-          <div style={{maxHeight: 300, overflowY: newOrder.products.length > 0 ? "scroll" : "hidden"}}>
+          <div className="custom-scroll" style={{maxHeight: 300, overflowY: newOrder.products.length > 0 ? "scroll" : "hidden"}}>
             <OrderCard
               order={ newOrder }
             />

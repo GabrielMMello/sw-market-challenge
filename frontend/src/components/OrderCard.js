@@ -31,7 +31,8 @@ function OrderCard({ order, setEditingOrder, setIsEditing, hasEditButton }) {
     }
 
     return (
-        <div >
+        <div>
+            <div>
             {order.products.map(product => {
             return (
                 <div style={{border: "1px solid black"}}>
@@ -59,6 +60,7 @@ function OrderCard({ order, setEditingOrder, setIsEditing, hasEditButton }) {
                 </div>
             )
             }) }
+            </div>
             <div className="card-footer" style={{border: "1px solid black"}}>
                 <p style={{fontSize: "1.1em"}}>Total: R$ {calculateTotal()}</p>
                 {hasEditButton && <Button color="btn-primary" text="Edit" onClick={handleEditBtnClick} />}
