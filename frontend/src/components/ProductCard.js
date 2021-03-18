@@ -155,12 +155,12 @@ function ProductCard({ order, setOrder }) {
                     onChange={handleSelectChange}
                     style={{outline: "none"}}
                 >
-                    { products.map(product => <option value={product.id}>{product.name}</option>) }
+                    { products.map(product => <option key={product.id} value={product.id}>{product.name}</option>) }
                 </select>
             </div>
             <div className="card-body w-100">
 
-                <p className="card-text" style={{color: "#E7E7E7"}}>
+                <div className="card-text" style={{color: "#E7E7E7"}}>
                     <span style={{fontSize: "0.75em", color: "#B5B5B5"}}>R$ </span>
                     <input
                         type="text"
@@ -173,7 +173,7 @@ function ProductCard({ order, setOrder }) {
                             }
                     />
                     <p style={{fontSize: "0.7em"}}>{"Profitability: " + profitability}</p>
-                </p>
+                </div>
 
                 <div className="d-flex p-1 justify-content-center">
                     <input

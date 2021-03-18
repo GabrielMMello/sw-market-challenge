@@ -8,8 +8,8 @@ import Button from '../components/Button.js'
 
 const BASE_URL = 'http://localhost:8080'
 
-function ProductList({ token, setAuth, setUserToken }) {
-  const DEFAULT_ORDER = {client: token, products: []}
+function NewOrder({ clientToken, setAuth, setClientToken }) {
+  const DEFAULT_ORDER = {client: clientToken, products: []}
   const [newOrder, setNewOrder] = useState(DEFAULT_ORDER)
 
   let history = useHistory()
@@ -20,16 +20,16 @@ function ProductList({ token, setAuth, setUserToken }) {
 
   const handleLogoutBtnClick = () => {
     setAuth(false)
-    setUserToken('')
+    setClientToken('')
     history.push('/')
   }
 
   const handleSubmit = async () => {
     let config = {
       headers: {
-        "Authentication": token,
+        "Authentication": clientToken,
       }
-    }
+    } 
     newOrder.hasOwnProperty("products")
     && newOrder.products.length > 0
     && await axios.post((BASE_URL + '/orders'), newOrder, config)
@@ -77,4 +77,4 @@ function ProductList({ token, setAuth, setUserToken }) {
   )
 }
 
-export default ProductList;
+export default NewOrder;

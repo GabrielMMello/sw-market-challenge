@@ -12,11 +12,11 @@ const DBConnection = (new Database(path.join(__dirname, '/src/database/data/')))
 const RepositoryInstance = new Repository(DBConnection)
 
 const {
-  getUsers,
+  getClients,
   getProducts,
-  getUserOrders,
+  getClientOrders,
   postOrder,
-  authenticateUser
+  authenticateClient
 } = new Services(RepositoryInstance)
 
 const HOME_MESSAGE = {
@@ -34,9 +34,9 @@ app.get('/', (_req, res) => {
   res.json(HOME_MESSAGE)
 })
 
-app.get('/users', async (_req, res) => {
-  const usersData = await getUsers()
-  res.json(usersData)
+app.get('/clients', async (_req, res) => {
+  const clientsData = await getClients()
+  res.json(clientsData)
 })
 
 app.get('/products', async (_req, res) => {
@@ -46,7 +46,7 @@ app.get('/products', async (_req, res) => {
 
 app.route('/orders')
   .get(async (req, res) => {
-    const {isAuthenticated, userId} = await authenticateUser(req.headers.authentication)
+    const {isAuthenticated, clientId} = await authenticateClient(req.headers.authentication)
 
     if(!isAuthenticated) {
       res
@@ -54,12 +54,12 @@ app.route('/orders')
         .json({error: "Unauthorized"})
     } 
     else {
-      const ordersData = await getUserOrders(userId)
+      const ordersData = await getClientOrders(clientId)
       res.json(ordersData)
     }
   })
   .post(async (req, res) => {
-    const {isAuthenticated, userId} = await authenticateUser(req.headers.authentication)
+    const {isAuthenticated, clientId} = await authenticateClient(req.headers.authentication)
 
     if(!isAuthenticated) {
       res
@@ -68,7 +68,7 @@ app.route('/orders')
     } 
     else {
       const newOrder = req.body
-      const newOrdersData = await postOrder({ newOrder, userId})
+      const newOrdersData = await postOrder({ newOrder, clientId})
       res
         .status(201)
         .json(newOrdersData)

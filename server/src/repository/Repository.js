@@ -3,23 +3,23 @@ class Repository {
         this.Database = DBConnection
     }
 
-    getUsers = async () => {
-        return await this.Database.getUsers();
+    getClients = async () => {
+        return await this.Database.getClients();
     }
     getProducts = async () => {
         return await this.Database.getProducts()
     }
     
-    getUserOrders = async (userId) => {
-        return await this.Database.getUserOrders(userId)
+    getClientOrders = async (clientId) => {
+        return await this.Database.getClientOrders(clientId)
     }
     
-    postOrder = async ({ newOrder, userId}) => {
-        return await this.Database.postOrder({ newOrder, userId})
+    postOrder = async ({ newOrder, clientId}) => {
+        return await this.Database.postOrder({ newOrder, clientId})
     }
 
-    findUserByToken = async (token) => {
-        const result = await this.Database.findUser({ token })
+    findClientByToken = async (token) => {
+        const result = await this.Database.findClient({ token })
 
         if (result.hasOwnProperty("message") && result.message === "Not found") return {error: "Invalid token"}
 
