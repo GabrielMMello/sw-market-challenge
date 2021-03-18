@@ -7,7 +7,7 @@ import Button from './Button.js'
 
 const BASE_URL = 'http://localhost:8080'
 
-function OrderEdit({ order, clientToken, setIsEditing }) {
+function OrderEdit({ order, clientToken, setIsFetching, setIsEditing }) {
   const [newOrder, setNewOrder] = useState(order)
 
   const handleCancelBtnClick = () => {
@@ -23,18 +23,19 @@ function OrderEdit({ order, clientToken, setIsEditing }) {
       newOrder.hasOwnProperty("products")
       && newOrder.products.length > 0
       && await axios.put((BASE_URL + '/orders'), newOrder, config)
-  }
+      setIsFetching(true)
+      setIsEditing(false)
+    }
 
   const handleSubmitDelete = async () => {
     const config = {
       headers: {
         "Authentication": clientToken,
-      }
+      },
     }
-    const body = {
-      orderId: newOrder.id
-    }
-    await axios.delete((BASE_URL + '/orders'), body, config)
+    await axios.delete((BASE_URL + `/orders/${newOrder.id}`), config)
+    setIsFetching(true)
+    setIsEditing(false)
   }
 
 

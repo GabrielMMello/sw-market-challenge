@@ -25,6 +25,7 @@ function Orders({ clientToken }) {
 
         const orders = (await axios.get((BASE_URL + '/orders'), config)).data
         setOrders(orders)
+        setIsFetching(false)
     }
 
     // Editar um pedido
@@ -48,7 +49,8 @@ function Orders({ clientToken }) {
                     <OrderEdit
                     order={ editingOrder }
                     clientToken={ clientToken }
-                    setIsEditing={setIsEditing}
+                    setIsEditing={ setIsEditing }
+                    setIsFetching={ setIsFetching }
                     />
                     : <ul className="custom-scroll" style={{overflowY: "scroll"}}>
                         {orders.map(order => 

@@ -30,7 +30,7 @@ function OrderCard({ order, setEditingOrder, setIsEditing, hasEditButton }) {
     }
 
     return (
-        <div>
+        <div className="mb-3">
             <div>
             {order.products.map(product => {
             return (

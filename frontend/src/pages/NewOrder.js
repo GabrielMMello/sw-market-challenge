@@ -9,7 +9,7 @@ import Button from '../components/Button.js'
 const BASE_URL = 'http://localhost:8080'
 
 function NewOrder({ clientToken, setAuth, setClientToken }) {
-  const DEFAULT_ORDER = {client: clientToken, products: []}
+  const DEFAULT_ORDER = {products: []}
   const [newOrder, setNewOrder] = useState(DEFAULT_ORDER)
 
   let history = useHistory()
@@ -33,6 +33,7 @@ function NewOrder({ clientToken, setAuth, setClientToken }) {
     newOrder.hasOwnProperty("products")
     && newOrder.products.length > 0
     && await axios.post((BASE_URL + '/orders'), newOrder, config)
+    history.push('/orders')
   }
 
   return (
