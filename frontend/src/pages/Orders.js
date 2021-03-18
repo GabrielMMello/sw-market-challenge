@@ -39,7 +39,7 @@ function Orders({ userToken }) {
     }
   
     return (
-        <div >
+        <div className="h-100">
             <h1 className="text-warning">Star Wars Market - Orders</h1>
 
             <div className="orders card bg-dark h-75 p-3 text-light rounded-3 my-3 mx-auto" style={isEditing ? null : {width: "30vw"}}>
@@ -50,7 +50,7 @@ function Orders({ userToken }) {
                     userToken={ userToken }
                     setIsEditing={setIsEditing}
                     />
-                    : <ul style={{overflowY: "scroll"}}>
+                    : <ul className="custom-scroll" style={{overflowY: "scroll"}}>
                         {orders.map(order => 
                         <li key={order.id} style={{boxShadow: "0px 0px 15px black", backgroundColor: "#323B44", listStyle: "none"}}>
                             <OrderCard
