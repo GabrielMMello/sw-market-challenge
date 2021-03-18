@@ -29,6 +29,8 @@
 
 Este é o projeto de um simulador de e-commerce onde é possível escolher um de cinco usuários pré-cadastrados e realizar pedidos. Além disso, é possível consultar os pedidos já realizados.
 
+Link do deploy do frontend: https://sw-market-challenge.herokuapp.com/
+
 ![sw-market](https://user-images.githubusercontent.com/66647120/111573710-ccbade00-8789-11eb-92ad-abbd3a77f3c1.png)
 
 ---
@@ -43,16 +45,16 @@ Este é o projeto de um simulador de e-commerce onde é possível escolher um de
    - [x] Página de lista de pedidos
    - [ ] Responsividade
    - [ ] Testes
-   - [ ] Deploy
+   - [x] Deploy
 
 - [x] Backend do e-commerse
    - [x] Rota de acesso à lista de usuários
    - [x] Rota de acesso à lista de produtos
    - [x] Rota de acesso à lista de pedidos exigindo autenticação
    - [x] Configurado CORS
-   - [ ] Banco de dados
+   - [x] Banco de dados simulado
    - [ ] Testes
-   - [ ] Deploy
+   - [x] Deploy
 
 ---
 
